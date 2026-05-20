@@ -6,6 +6,7 @@ const useFetch = (url) => {
     const[loading, setLoading] = useState(true)
     const [data, setData] = useState([])
     const [error, setError] = useState(null)
+    const [refreshKey, setRefreshKey] = useState(0)
 
     useEffect(() => {
         setLoading(true)
@@ -26,12 +27,15 @@ const useFetch = (url) => {
             }
         };
         getData();
-    }, [url]);
+    }, [url, refreshKey]);
+
+    const refetch = () => setRefreshKey((k) => k + 1)
 
     return {
         loading,
         data,
-        error
+        error,
+        refetch,
     }
 }
 
